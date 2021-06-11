@@ -32,6 +32,6 @@ deploy:
       on:
           all_branches: true
 before_deploy:
-    - git tag -d 0.nightly
+    - git tag -d 0.nightly || true
     - git remote add gh https://${TRAVIS_GITHUB_API_USERNAME}:${TRAVIS_GITHUB_API_KEY}@github.com/AlternC/alternc-certbot.git
-    - git push --delete gh 0.nightly
+    - git push --delete gh 0.nightly || true
