@@ -18,9 +18,9 @@ deploy:
     - provider: releases
       skip_cleanup: true
       file_glob: true
-      draft: true
       file: "../*.deb"
       tag_name: "0.nightly"
+      prerelease: true
       overwrite: true
       target_commitish: $TRAVIS_COMMIT
       api_key:
