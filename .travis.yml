@@ -18,6 +18,7 @@ deploy:
     - provider: releases
       skip_cleanup: true
       file_glob: true
+      draft: true
       file: "../*.deb"
       tag_name: "nightly"
       target_commitish: $TRAVIS_COMMIT
