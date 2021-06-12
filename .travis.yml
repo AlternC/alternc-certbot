@@ -26,7 +26,7 @@ deploy:
       skip_cleanup: true
       file_glob: true
       file: "../*.deb"
-      tag_name: "0.nightly"
+      tag_name: "nightly"
       prerelease: true
       overwrite: true
       body: Automatic build of $TRAVIS_BRANCH ($TRAVIS_COMMIT) built by Travis CI on $(date +'%F %T %Z').
@@ -36,6 +36,6 @@ deploy:
       on:
           branch: test-deploy
 before_deploy:
-    - git tag -d 0.nightly || true
+    - git tag -d nightly || true
     - git remote add gh https://${TRAVIS_GITHUB_API_USERNAME}:${TRAVIS_GITHUB_API_KEY}@github.com/AlternC/alternc-certbot.git
-    - git push --delete gh 0.nightly || true
+    - git push --delete gh nightly || true
