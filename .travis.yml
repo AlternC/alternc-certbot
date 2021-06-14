@@ -38,6 +38,9 @@ deploy:
       on:
           branch: test-deploy
 before_deploy:
-    - git tag -d nightly || true
-    - git remote add gh https://${TRAVIS_GITHUB_API_USERNAME}:${TRAVIS_GITHUB_API_KEY}@github.com/AlternC/alternc-certbot.git
-    - git push --delete gh nightly || true
+    - >
+      if [[ $TRAVIS_BRANCH == "test-deploy" ]]; then
+        git tag -f nightly || true &&
+        git remote add gh https://${TRAVIS_GITHUB_API_USERNAME}:${TRAVIS_GITHUB_API_KEY}@github.com/AlternC/alternc-certbot.git &&
+        git push -f gh nightly || true
+      fi
