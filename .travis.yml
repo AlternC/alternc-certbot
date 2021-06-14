@@ -43,7 +43,7 @@ before_deploy:
       if [[ $TRAVIS_BRANCH == "test-deploy" ]]; then
         echo "Update remote assets"
         git tag -f nightly || true &&
-        git remote add gh https://${TRAVIS_GITHUB_API_USERNAME}:${TRAVIS_GITHUB_API_KEY}@github.com/AlternC/alternc-certbot.git &&
+        git remote add gh https://${TRAVIS_GITHUB_API_KEY}@github.com/AlternC/alternc-certbot.git &&
         git push --delete -f origin nightly || true &&
         git push -f gh nightly || true
       fi
