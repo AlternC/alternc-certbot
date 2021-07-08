@@ -40,7 +40,6 @@ class m_certbot
     {
     }
 
-    
     // -----------------------------------------------------------------
     /** Create a new TLS certificate for $fqdn, or renew any existing one.
      * @param  string $fqdn a fully qualified domain name (like sthg.example.com)
@@ -70,23 +69,31 @@ class m_certbot
         return false;
     }
 
-    
     // -----------------------------------------------------------------
     /**
     * Checks if dig returns our L_PUBLIC_IP
     */
     public function isLocalAlterncDomain($fqdn)
     {
-        global $L_PUBLIC_IP;
+        global $L_PUBLIC_IP, $L_OTHER_IPS;
+        if ($L_OTHER_IPS != '') {
+            $ips = "$L_PUBLIC_IP,$L_OTHER_IPS";
+            $arr = explode(',', $ips);
+        } else {
+            $arr = array($L_PUBLIC_IP);
+        }
         $out=array();
         exec("dig A +trace ".escapeshellarg($fqdn), $out);
         foreach ($out as $line) {
-            if (preg_match('#.*IN.A.*?([0-9\.]*)$#', $line, $mat) && $mat[1] == $L_PUBLIC_IP) {
-                return true;
-            }
+            foreach ($arr as $i) {
+                if (preg_match('#.*IN.A.*?([0-9\.]*)$#', $line, $mat) && $mat[1] == $i) {
+                    return true;
+                }
+             }
         }
         return false;
     }
+
 }
 
 /* Class m_certbot */
